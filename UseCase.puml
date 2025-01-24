@@ -26,4 +26,5 @@ UC1 --> UC5
 UC2 --> UC5
 UC4 --> DB : クエリ実行
 DB --> UC4 : 机の使用者名を返却
+UC5 --> UC3
 @enduml
