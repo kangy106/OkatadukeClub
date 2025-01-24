@@ -1,0 +1,61 @@
+@startuml
+' ドメインモデル図: ラズパイ、サーバ、AIサービス、Slackの関係を表現
+
+package "デバイス" {
+    entity RaspberryPi {
+        * raspiId
+    }
+
+    entity Camera {
+    }
+
+    RaspberryPi "1" -- "1" Camera : uses
+}
+
+package "サーバ" {
+    entity Server {
+        * receives data
+        * processes photos
+        * sends notifications
+    }
+
+    entity AIService {
+        * analyzes photos
+        * returns results
+    }
+
+    Server "1" -- "*" RaspberryPi : receives data from
+    Server "1" -- "1" AIService : sends photos to
+}
+
+package "データ" {
+    entity Photo {
+        * imageData
+        * timestamp
+    }
+
+    entity Result {
+        * status
+        * score
+        * error
+    }
+
+    entity User {
+        * name
+        * associated with raspiId
+    }
+
+    Server "1" -- "*" Photo : processes
+    AIService "1" -- "1" Photo : analyzes
+    AIService "1" -- "1" Result : returns
+    RaspberryPi "1" -- "1" User : is associated with
+}
+
+package "通知" {
+    entity Slack {
+        * receives notifications
+    }
+
+    Server "1" -- "1" Slack : sends notifications to
+}
+@enduml
