@@ -1,0 +1,31 @@
+@startuml
+' シーケンス図: 通知送信処理
+actor "Server" as Server
+participant "Slack API" as SlackAPI
+actor "Slack" as Slack
+
+Server -> SlackAPI: 通知送信リクエスト
+SlackAPI -> Slack: 通知送信
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
