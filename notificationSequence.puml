@@ -1,13 +1,8 @@
 @startuml
 ' シーケンス図: 通知送信処理
-actor "Raspberry Pi" as Raspi
 actor "Slack" as Slack
 participant "Server" as Server
-participant "AIサービス" as AIService
 participant "Slack API" as SlackAPI
-Raspi -> Server: 写真撮影とデータ送信
-Server -> AIService: 解析リクエスト
-AIService -> Server: 机の汚さ判定結果を返却
 Server -> SlackAPI: 通知送信リクエスト
 SlackAPI -> Slack: 通知送信
 @enduml
