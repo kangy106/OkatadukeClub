@@ -15,5 +15,5 @@ PhotoController -> AIInterface : 解析リクエストを送信
 AIInterface -> AnalysisResult : 解析結果を受信
 PhotoController -> ResultController : 解析結果を処理
 ResultController -> AnalysisResult : 解析結果を保存
-ResultController -> SlackInterface : 判定結果を通知
+ResultController - SlackInterface : 判定結果を通知
 @enduml
