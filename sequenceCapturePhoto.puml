@@ -1,0 +1,15 @@
+@startuml
+actor "Raspberry Pi" as Raspi
+boundary "Camera" as Camera
+control "Main controller" as Controller
+entity "Server" as Server
+
+' Define the flow
+Raspi -> Camera
+Camera -> Controller : capturePhoto()
+Controller -> Camera : getTime()
+
+Controller -> Server : sendData()
+@enduml
+
+create_robustness_capture_photo
