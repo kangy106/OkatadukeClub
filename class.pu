@@ -3,12 +3,8 @@
 
 class RaspberryPi {
     + raspiId: String
+    + sendImage()
 }
-
-class Camera {
-}
-
-RaspberryPi "1" -- "1" Camera : uses
 
 class Server {
     + receivesData()
@@ -37,16 +33,15 @@ class Result {
 
 class User {
     + name: String
-    + raspiId: String
+    + id: Integer
 }
 
-Server "1" -- "*" Photo : processes
 AIService "1" -- "1" Photo : analyzes
 AIService "1" -- "1" Result : returns
-RaspberryPi "1" -- "1" User : is associated with
+Slack "1" -- "*" User : is associated with
 
 class Slack {
-    + receivesNotifications()
+    + sendNotifications()
 }
 
 Server "1" -- "1" Slack : sends notifications to
