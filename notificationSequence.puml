@@ -1,8 +1,23 @@
 @startuml
-' シーケンス図: 通知送信処理
+' ロバストネス図: 通知送信処理
+actor "Server" as Server
 actor "Slack" as Slack
-participant "Server" as Server
-participant "Slack API" as SlackAPI
-Server -> SlackAPI: 通知送信リクエスト
-SlackAPI -> Slack: 通知送信
+rectangle NotificationProcess {
+    entity "写真判定処理" as Processing
+    entity "通知送信" as Sending
+    boundary "Slack API" as API
+    control "通知制御" as Control
+}
+Server -> Processing : 判定結果を受け取る
+Processing -> Sending : 通知リクエスト
+Sending -> Control : 通知を管理
+Control -> API : Slack通知送信
+API - Slack : 通知受信
 @enduml
+
+
+
+
+
+
+
