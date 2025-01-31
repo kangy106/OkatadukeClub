@@ -1,0 +1,8 @@
+- name: Setup Raspberry Pi
+  become: true
+  hosts: all
+  roles:
+    - firewall
+    - opencv
+    - okataduke
+    # - cron

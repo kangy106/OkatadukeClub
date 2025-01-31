@@ -1,0 +1,17 @@
+- name: Install python3-pip
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+
+- name: Install libopencv-dev
+  apt:
+    name: libopencv-dev
+    state: present
+    update_cache: yes
+
+- name: Install python3-opencv
+  apt:
+    name: python3-opencv
+    state: present
+    update_cache: yes
