@@ -1,0 +1,27 @@
+@startuml
+actor "Raspberry Pi" as Raspi
+boundary "Camera" as Camera
+control "Get Current Time" as GetTime
+control "Check 7:00 or 19:00?" as CheckTime
+control "Capture Photo" as CapturePhoto
+control "Send Data" as SendData
+control "Send Error Message" as SendError
+entity "Server" as Server
+
+' Define the flow
+Raspi -> Camera
+Camera -> GetTime
+GetTime -> CheckTime
+
+' Conditional branching
+CheckTime -> GetTime : No
+CheckTime -> CapturePhoto : Yes
+
+' Capture success/failure branching
+CapturePhoto -> SendData : Success
+CapturePhoto -> SendError : Fail
+
+' Send to server
+SendData - Server
+SendError - Server
+@enduml
