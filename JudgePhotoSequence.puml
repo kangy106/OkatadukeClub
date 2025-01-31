@@ -1,0 +1,11 @@
+@startuml
+actor "Raspberry Pi" as Raspi
+participant "サーバー" as Server
+participant "AIサービス" as AIService
+participant "Slack" as Slack
+
+Raspi -> Server : 写真データを送信
+Server -> AIService : 解析リクエスト
+AIService -> Server : 解析結果（机の汚さ判定）を返却
+Server -> Slack : 判定結果を通知
+@enduml
