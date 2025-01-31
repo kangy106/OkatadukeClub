@@ -1,15 +1,20 @@
 @startuml
-actor "Raspberry Pi" as Raspi
-boundary "Camera" as Camera
-control "Main controller" as Controller
-entity "Server" as Server
+title 2.1 写真撮影とデータ送信
 
-' Define the flow
-Raspi -> Camera
-Camera -> Controller : capturePhoto()
-Controller -> Camera : getTime()
+actor RaspberryPi
+participant "カメラ" as Camera
+participant "サーバ" as Server
 
-Controller -> Server : sendData()
+RaspberryPi -> Camera: 写真を撮影
+Camera --> RaspberryPi: 撮影成功 (画像データ)
+Camera -> RaspberryPi: 撮影失敗 (エラー)
+
+alt 撮影成功
+    RaspberryPi -> Server: 画像データを送信
+    Server --> RaspberryPi: 受信確認
+else 撮影失敗
+    RaspberryPi -> Server: エラーメッセージを送信
+    Server --> RaspberryPi: 受信確認
+end
+
 @enduml
-
-create_robustness_capture_photo
