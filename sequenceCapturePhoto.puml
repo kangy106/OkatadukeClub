@@ -1,0 +1,20 @@
+@startuml
+title 2.1 写真撮影とデータ送信
+
+actor RaspberryPi
+participant "カメラ" as Camera
+participant "サーバ" as Server
+
+RaspberryPi -> Camera: 写真を撮影
+Camera --> RaspberryPi: 撮影成功 (画像データ)
+Camera -> RaspberryPi: 撮影失敗 (エラー)
+
+alt 撮影成功
+    RaspberryPi -> Server: 画像データを送信
+    Server --> RaspberryPi: 受信確認
+else 撮影失敗
+    RaspberryPi -> Server: エラーメッセージを送信
+    Server --> RaspberryPi: 受信確認
+end
+
+@enduml
