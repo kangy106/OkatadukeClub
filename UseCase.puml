@@ -9,6 +9,7 @@ rectangle Server {
     usecase "写真撮影とデータ送信" as UC1
     usecase "写真判定処理" as UC2
     usecase "通知送信" as UC3
+    usecase "エラー処理" as UC5
 }
 
 ' アクターとユースケースの関係
@@ -18,7 +19,7 @@ UC2 --> AIService : 解析リクエスト
 AIService --> UC2 : 机の汚さ判定結果を返却
 UC2 --> UC3
 UC3 --> Slack
-UC1 --> UC4
-UC2 --> UC4
-UC4 --> UC3
+UC1 --> UC5
+UC2 --> UC5
+UC5 --> UC3
 @enduml
