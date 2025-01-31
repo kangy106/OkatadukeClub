@@ -1,0 +1,19 @@
+@startuml
+actor "Raspberry Pi" as Raspi
+boundary "写真送信インターフェース" as PhotoInterface
+control "写真解析コントローラ" as PhotoController
+entity "写真データ" as PhotoData
+boundary "AIサービスインターフェース" as AIInterface
+control "解析結果処理コントローラ" as ResultController
+entity "解析結果" as AnalysisResult
+boundary "Slack通知インターフェース" as SlackInterface
+
+Raspi -> PhotoInterface : 写真データを送信
+PhotoInterface -> PhotoController : 写真データを受け渡し
+PhotoController -> PhotoData : 写真データを保存
+PhotoController -> AIInterface : 解析リクエストを送信
+AIInterface -> AnalysisResult : 解析結果を受信
+PhotoController -> ResultController : 解析結果を処理
+ResultController -> AnalysisResult : 解析結果を保存
+ResultController - SlackInterface : 判定結果を通知
+@enduml
