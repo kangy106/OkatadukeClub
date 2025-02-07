@@ -1,0 +1,6 @@
+- name: Copy `cron setting program files` to `~/etc/cron.d`
+  ansible.builtin.copy:
+    remote_src: no
+    src: check_desk
+    dest: /etc/cron.d/check_desk
+    mode: '0644'
