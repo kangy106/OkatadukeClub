@@ -1,0 +1,38 @@
+@startuml
+' クラス図: ラズパイ、サーバ、AIサービス、Slackの関係を表現
+class RaspberryPi {
+    + raspiId: String
+    + sendImage()
+}
+class Server {
+    + receivesData()
+    + processesPhotos()
+    + sendsNotifications()
+}
+class AIService {
+    + analyzesPhotos()
+    + returnsResults()
+}
+Server "1" -- "*" RaspberryPi : receives data from
+Server "1" -- "1" AIService : sends photos to
+class Photo {
+    + imageData: Binary
+    + timestamp: DateTime
+}
+class Result {
+    + status: String
+    + score: Double
+    + error: String
+}
+class User {
+    + name: String
+    + id: Integer
+}
+AIService "1" -- "1" Photo : analyzes
+AIService "1" -- "1" Result : returns
+Slack "1" -- "*" User : is associated with
+class Slack {
+    + sendNotifications()
+}
+Server "1" -- "1" Slack : sends notifications to
+@enduml
