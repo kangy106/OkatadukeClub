@@ -2,6 +2,12 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 import base64
 from opeai import OpenAI
+from dotenv import load_dotenv
+import os
+import re
+
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
@@ -17,14 +23,16 @@ def openai_image_process(data: ImageData):
 
         # プロンプト
         # prompt = f"この画像には何が映っていますか？"
-        prompt = f"This is picture of desk. Can you represent how messy the desk is by number?"
+        prompt = f"This is picture of desk. Can you represent how messy the desk is by number on a scale of 0 to 100? Just give me a number"
 
         client = OpenAI(
-            api_key = "api-key"
+            api_key = OPENAI_API_KEY,
+            organization = "org-sUHbkxwO4EfNkTR5gCs7ZLei",
+            project = "proj_jVxUUNlUPysqMsLfmWzfRU5V"
         )
 
         res = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-turbo-2024-04-09",
             messages=[
                 {"role": "system", "content": "You are a person who judge the messiness of desks."},
                 {"role": "user", "content": [
@@ -44,8 +52,13 @@ def openai_image_process(data: ImageData):
         )
 
         # 結果を出力
-        print("GPTの回答:")
-        print(res.choices[0].message.content)
+        comment = res.choices[0].message.content
+        score_pattern = r'\b\d{2}\b'
+        score = int(re.findall(score_pattern, comment))
+        if score == []:
+            score = 0
+        else:
+            score = score[0]
 
         
         return True
