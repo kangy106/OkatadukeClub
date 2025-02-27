@@ -39,5 +39,3 @@ def send_slack_message(ip_address: str, score: int, image_path: str):
     except SlackApiError as e:
         print(f"エラー発生: {e.response['error']}")
 
-if __name__ == "__main__":
-    send_slack_message("192.168.1.100", 80, "test.png")

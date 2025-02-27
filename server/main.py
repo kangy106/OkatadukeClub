@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import os
 import re
 
+from send_desk_status import send_slack_message
+
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -20,6 +22,14 @@ class ImageData(BaseModel):
 
 def openai_image_process(data: ImageData):
     try:
+        # Base64エンコードされた画像をデコード
+        image_bytes = base64.b64decode(data.file)
+        file_name = f"{data.raspiId}_{data.time}.jpg"
+        file_path = "./images/" + file_name
+        
+        # 画像を保存
+        with open(file_path, "wb") as f:
+            f.write(image_bytes)
 
         # プロンプト
         # prompt = f"この画像には何が映っていますか？"
@@ -59,6 +69,7 @@ def openai_image_process(data: ImageData):
             score = 0
         else:
             score = score[0]
+            send_slack_message("163.221.190.237", score,file_path)
 
         
         return True
