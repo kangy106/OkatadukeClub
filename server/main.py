@@ -57,18 +57,18 @@ def openai_image_process(data: ImageData):
                       },
                     }
                 ]}
-            ],
-            reponse_format ={"type": "json"}
+            ]
         )
 
         # 結果を出力
         comment = res.choices[0].message.content
         score_pattern = r'\b\d{2}\b'
-        score = int(re.findall(score_pattern, comment))
-        if score == []:
+        score_list = re.findall(score_pattern, comment)
+        score = None
+        if score_list == []:
             score = 0
         else:
-            score = score[0]
+            score = int(score_list[0])
             send_slack_message("163.221.190.237", score,file_path)
 
         
