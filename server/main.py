@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 import base64
-from opeai import OpenAI
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import re
